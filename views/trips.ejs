@@ -1,0 +1,146 @@
+
+<html>
+<% include ./partials/header %>
+<div class="container">
+<h1 style="color: black;">Available Trips</h1>
+
+<body>
+    <div class="row">
+  <div class="col-md-3 form-inline form-group panel panel-default input-group ">
+      <div class="panel-heading">
+          <h4 style="text-align:center;">Filter by</h4>
+      </div>
+
+  
+<form class="form-group" method="POST"  action="/trips">
+    <div class="row">
+        
+    <div class="col-md-12">
+    <input class="form-control"  type="text" name="origin" placeholder="Origin">
+    </div>
+    
+    <div class="col-md-12">
+    <input class="form-control"  type="text" name="destination" placeholder="Destination">
+    </div>
+    
+    <div class="col-md-12">
+    <input class="form-control"  type="text" name="date" placeholder="Date: YYYY,MM,DD">
+    </div>
+    
+    <div class="col-md-12">
+    <input class="form-control" type="number" name="priceMin" placeholder="Minimum Price">
+    </div>
+    </div>
+    
+    <div class="row">
+    
+    <div class="col-md-12">
+    <input class="form-control" type="number" name="priceMax" placeholder="Maximum Price">
+    </div>
+    
+    <div class="col-md-12">
+    <input class="form-control" type='number' name="seats" placeholder='Minimum Available Seats'>
+    </div>
+    
+    <div class="col-md-12">
+    <input class="form-control" type="text" name="sortBy" placeholder="Sort By">
+    </div>
+    
+    <div class="col-md-12">
+    <input class="form-control" type="text" name="order" placeholder="Increasing/Decreasing">
+    </div>
+    
+    <div class="col-md-12">
+            <button class="btn btn-default btn-block">Search</button>
+    </div>
+
+    </div>
+  
+    
+</form>
+</div>
+
+
+    <h1 style="text-align:center; font-size:50; color:black;">Results</h1>
+
+<% if ((same !== undefined) && (same !== null) && same) { %>
+    <strong> Error: Please enter a destination which is different than the origin. </strong>
+<% } else { %>
+
+    <% if(length > 0){ %>
+        
+    
+        <% trips.forEach(function(trip){ %>
+        
+            <% if((trip.driver !== undefined) && (trip.driver !== null)){ var driverRating = trip.driver.rating; }else{ var driverRating = "";}; %>
+
+               <% if(trip.availableSeats !== 0) { %>
+               <div class="col-md-6 panel panel-default">
+                <table class="table table-user-information">
+                        <tbody>
+                          <tr>
+                            <td><strong>Origin:</strong></td>
+                            <td><%= trip.origin %></td>
+                          </tr>
+                         <tr>
+                            <td><strong>Destination:</strong></td>
+                            <td><%= trip.destination %></td>
+                          </tr>
+                          <tr>
+                            <td><strong>Date:</strong></td>
+                            <td><%= trip.date %></td>
+                          </tr>
+                          <tr>
+                            <td><strong>Price:</strong></td>
+                            <td>$<%= trip.price %></td>
+                          </tr>
+                          <tr>
+                            <td><strong>Available Seats:</strong></td>
+                            <td><%=trip.availableSeats%></td>
+                          </tr>
+                          <tr>
+                            <td><strong>Driver Rating:</strong></td>
+                            <td><%=driverRating%></td>
+                          </tr>
+                          <tr>
+                              <td>
+                                  <a class="btn btn-primary btn-default btn-block" href="<%="trip/" + trip._id %> ">view details/Leave a Rating</a> 
+                              </td>
+                        </tr>
+                            </tbody>
+    
+                      </table>
+                      </div>
+               
+               
+                
+                
+        
+                <!--<form method="POST" action=/tripsearch class="addTripForm">
+                     <input type="checkbox" name="addTrip" value=<%=//trip._id%> 
+                    <button class="addTripButton" value="<%= trip._id %>" name="tripID">Check to Add Trip</button>
+                </form>-->
+    
+            <!--  -->
+            <% } %>
+        <% }); %>
+      
+    <% } else { %>
+    
+        <strong> There are no trips that match your search. </strong>
+        
+    <% }; %>
+    <% } %>
+</div>
+</div>
+<!--
+<script>
+    $('button.addTripButton').click( function() {
+        $('form.addTripForm').submit();
+    });
+</script>
+
+-->
+    
+<% include ./partials/footer %>
+

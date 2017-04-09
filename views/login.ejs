@@ -1,0 +1,57 @@
+<html>
+    <head>
+      <title>Hitchhikers</title>
+       <% include ./partials/header %>
+    </head>
+    <body>
+        
+        
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '664340727102509',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();   
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+        
+        
+<div class="container">
+
+    <div class="col-md-6 panel panel-default height" style="margin-top:100px;">
+                        <div class="panel-heading">Login</div>
+     
+     <div class="container" style="btn btn-default">
+        <fb:login-button 
+            scope="public_profile,email"
+            onlogin="checkLoginState();">
+        </fb:login-button>
+        </div>
+
+        <form class="form-group" action = "/login" method = "POST">
+             <div>Username: <input class="form-control" type = "text" name = "username" placeholder = "username" required></div>
+             <div>Password: <input class="form-control" type = "password" name = "password" placeholder = "password" required></div>
+             <% if( error !== null ){ %>
+                <% if( error !== "" ){ %>
+                    <li><%= error %></li>
+                 <% } %>
+             <% } %>
+             <button class="btn btn-default btn-block" style="margin-top:30px;">Login</button>
+        </form>
+        </div>
+        </div>
+        </div>
+        <% include ./partials/footer %>
+    </body>
+</html>
